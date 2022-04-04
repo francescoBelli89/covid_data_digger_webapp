@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>covidCasesTable Data Digger</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="../static/index.css">
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="/">HOME</a>
+    </div>
+  </div>
+</nav>
+  
+<div class="container-fluid text-center">    
+  <div class="row content">
+    <div class="col-sm-2 sidenav">
+    </div>
+    <div class="col-sm-8 text-left"> 
+      <h1 style="text-align-last: center;">DATA DIGGER APP</h1>
+      <div class="col-sm-16 text-left;margin: top 50px;">
+        <h3 style="margin: top 50px;text-align: center;">{{title}}</h3>  
+        <table class="table table-bordered" id="covidCasesTable">
+          <thead>
+            <tr>
+              <th><button class="table__header">Region</button></th>
+              <th data-type="number"><button class="table__header">Total cases</button></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for res in result %}
+              <tr>
+                <td>{{ res[0] }}</td>
+                <td>{{ res[1] }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% block scripts %}
+    <script src="../static/table_utils.js">
+    </script>
+    {% endblock %}
+    </div>
+    <div class="col-sm-2 sidenav">
+      <div class="well">
+        <form method="GET" action="/search">
+          <label for="date">
+            Choose start date (minimum, February 24th 2020):
+            <input type="date" name="date" min="2020-02-24" required>
+            <span class="validity"></span>
+          </label>       
+          <p>
+            <button>Search</button>
+          </p>
+        </form>
+      </div>
+      <div class="well">
+        <button onclick="exportTableToExcel('covidCasesTable', 'Covid_Data')">
+          <span class="download"></span>
+          Download Table
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="container-fluid text-center">
+</footer>
+</body>
+</html>
